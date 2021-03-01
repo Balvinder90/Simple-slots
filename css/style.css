@@ -1,0 +1,368 @@
+/* FONTS */
+@font-face {
+  font-family: "Agency FB";
+  src: url("../font/AgencyFB-Reg.eot");
+  src: url("../font/AgencyFB-Reg.eot?#iefix") format("embedded-opentype"),
+    url("../font/AgencyFB-Reg.woff2") format("woff2"),
+    url("../font/AgencyFB-Reg.woff") format("woff"),
+    url("../font/AgencyFB-Reg.ttf") format("truetype"),
+    url("../font/AgencyFB-Reg.svg#AgencyFB-Reg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* BASE STYLES */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: "Agency FB";
+  height: 100vh;
+  display: flex;
+  padding: 0 1rem;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(90deg, #ff8484, #f33b3c);
+  overflow: hidden;
+}
+
+h1 {
+  font-size: 3.5rem;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+h3 {
+  font-size: 2.5rem;
+  color: #ff5150;
+  padding: 0.4rem 1rem;
+  border-radius: 1rem;
+  transition: all 0.5s;
+}
+
+h1,
+h3 {
+  font-weight: 100;
+}
+
+.d-none {
+  display: none;
+}
+
+hr {
+  height: 1px;
+  background-color: #ff5150;
+  border: none;
+  outline: none;
+  opacity: 0.25;
+}
+
+/* GAME CONTAINER */
+.game-container {
+  width: 80em;
+  margin-bottom: 4rem;
+}
+
+/* SLOT CONTAINER */
+.slot-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.slot-container img {
+  width: 10rem;
+  transition: all 0.5s;
+}
+
+/* SLOTS */
+.slot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 2rem 0rem;
+  border-radius: 1.5rem;
+}
+
+/* BET CONTAINER */
+.bet-container {
+  width: 50em;
+  margin: auto;
+  display: grid;
+  justify-items: center;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* BET BUTTONS */
+.bet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.bet-amount,
+.make-bet {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  height: 8.2rem;
+  width: 8.2rem;
+  border: 0.25rem solid white;
+  background-color: transparent;
+  outline: none;
+  color: #fff;
+  font-family: "Agency FB";
+  font-size: 3rem;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.bet-amount-checked {
+  background-color: #fff;
+  color: #ff5150;
+}
+
+.bet-amount:hover,
+.bet-amount:hover,
+.bet-amount:hover,
+.make-bet:hover {
+  background-color: #fff;
+  color: #ff5150;
+}
+
+.select-bet {
+  position: absolute;
+  bottom: -4rem;
+  height: 0.6rem;
+  width: 0.6rem;
+  background-color: #fff;
+  border-radius: 50%;
+  animation: bethover 1s infinite;
+}
+
+.make-bet img {
+  width: 4rem;
+}
+
+.change {
+  font-size: 2.7rem;
+  text-align: center;
+  color: #fff;
+  opacity: 0;
+  margin-bottom: 1rem;
+}
+
+.credit-change {
+  animation: creditPos 1s;
+}
+
+/* PAYOUT */
+.payout-check {
+  position: fixed;
+  left: -99rem;
+  top: -99rem;
+}
+
+.payout-label,
+.reset-credits {
+  position: fixed;
+  width: 5rem;
+  height: 5rem;
+  background-color: #fff;
+  color: #f33b3c;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+
+.payout-label {
+  z-index: 10;
+  right: 1rem;
+  top: 1rem;
+}
+
+.reset-credits {
+  z-index: 0;
+  left: 1rem;
+  top: 1rem;
+  font-family: "Agency FB";
+  outline: none;
+  border: none;
+}
+
+.payout-label:hover,
+.reset-credits:hover {
+  letter-spacing: 1px;
+}
+
+.payout-background {
+  transform: scale(1);
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  background-color: #fff;
+  color: black;
+  transition: all 1s;
+  width: 4em;
+  height: 4em;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.payout-container {
+  display: grid;
+  row-gap: 1rem;
+  position: fixed;
+  opacity: 0;
+  transition: all 1s;
+  z-index: -1;
+}
+
+.payout-check:checked ~ .payout-background {
+  transform: scale(100);
+}
+
+.payout-check:checked ~ .payout-label {
+  background-color: #f33b3c;
+  color: #fff;
+}
+
+.payout-check:checked ~ .payout-container {
+  transition-delay: 1s;
+  opacity: 1;
+  z-index: 1;
+}
+
+.payout-info {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  justify-items: center;
+  align-items: center;
+  column-gap: 1rem;
+}
+
+.payout-info:hover > h3 {
+  background-color: #ff5150;
+  color: #fff;
+}
+
+.payout-info img {
+  width: 6rem;
+  transition: all 0.5s;
+}
+
+.payout-info:hover > img:nth-child(1) {
+  transform: translateX(3rem);
+}
+
+.payout-info:hover > img:nth-child(3) {
+  transform: translateX(-3rem);
+}
+
+/* OFFSCREEN IMAGES FOR SMOOTH LOADING WHEN IMAGES ARE BEING CHANGED IN THE SLOTS */
+.offscreen-images {
+  position: fixed;
+  top: 9999rem;
+  left: 9999rem;
+}
+
+/* ANIMATIONS */
+.slot-img-effect {
+  opacity: 0;
+  transform: rotate(360deg);
+}
+
+@keyframes bethover {
+  0% {
+    transform: translateY(-2rem);
+  }
+  50% {
+    transform: translateY(-1rem);
+  }
+  100% {
+    transform: translateY(-2rem);
+  }
+}
+
+@keyframes creditPos {
+  0% {
+    transform: translateY(0rem);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-1rem);
+  }
+  100% {
+    transform: translateY(-2rem);
+  }
+}
+
+/* MEDIA QUERIES */
+@media only screen and (max-width: 51.25em /* 820px */) {
+  html {
+    font-size: 54%;
+  }
+}
+
+@media only screen and (max-width: 47.5em /* 760px */) {
+  html {
+    font-size: 53%;
+  }
+}
+
+@media only screen and (max-width: 42.5em /* 680px */) {
+  html {
+    font-size: 52%;
+  }
+}
+
+@media only screen and (max-width: 37.5em /* 600px */) {
+  html {
+    font-size: 51%;
+  }
+}
+
+@media only screen and (max-width: 31.25em /* 500px */) {
+  h3 {
+    text-align: center;
+  }
+
+  .slot-container img {
+    width: 8.5rem;
+  }
+}
+
+@media only screen and (max-width: 30em /* 480px */) {
+  .slot-container img {
+    width: 8rem;
+  }
+  .bet-container {
+    width: 40rem;
+  }
+
+  .bet-amount,
+  .bet-amount,
+  .bet-amount,
+  .make-bet {
+    height: 8rem;
+    width: 8rem;
+  }
+}
