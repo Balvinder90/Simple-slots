@@ -8,6 +8,7 @@ A casino slot game with a simple UI/UX made using vanilla CSS and JavaScript.
 4. CSS transition effects used
 5. Simple UI design made using CSS grid and Flexbox
 6. Checkbox hack used for the fading in/out effect for the payout container
-7. Responsive design 
-8. Modern JavaScript
-9. Game variables can be changed in the JavaScript file which will update the winnings and the relevant DOM elements
+7. A sound effect plays when there is three matching slots
+8. Responsive design 
+9. Modern JavaScript
+10. Game variables can be changed in the JavaScript file which will update the winnings and the relevant DOM elements
