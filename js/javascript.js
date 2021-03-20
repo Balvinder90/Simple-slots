@@ -1,24 +1,26 @@
-// DECLARE GAME VARIABLES
-const betOne = 100;
-const betTwo = 200;
-const betThree = 300;
-const smileyWinnings = 600;
-const bellWinnings = 700;
-const diceWinnings = 1000;
-const cherryWinnings = 2000;
-const sevenWinnings = 5000;
-let currentBet = null;
-let rotate = 0;
-let winSoundMP3 = new Audio("./sound/win.mp3");
-let winSoundOGG = new Audio("./sound/win.ogg");
+// DECLARE GAMESTATE OBJECT
+const gameState = {
+  betOne: 100,
+  betTwo: 200,
+  betThree: 300,
+  currentBet: null,
+  smileyWinnings: 600,
+  bellWinnings: 700,
+  diceWinnings: 1000,
+  cherryWinnings: 2000,
+  sevenWinnings: 5000,
+  rotate: 0,
+  winSoundMP3: new Audio("./sound/win.mp3"),
+  winSoundOGG: new Audio("./sound/win.ogg"),
+};
 
 // SLOT IMAGES ARRAY
 const slotImages = [
-  `<img src="img/smiley.png" alt="Smiley" title="Smiley" data-winnings="${smileyWinnings}"/>`,
-  `<img src="img/bell.png" alt="Bell" title="Bell" data-winnings="${bellWinnings}"/>`,
-  `<img src="img/dice.png" alt="Dice" title="Dice" data-winnings="${diceWinnings}"/>`,
-  `<img src="img/cherry.png" alt="Cherry" title="Cherry" data-winnings="${cherryWinnings}"/>`,
-  `<img src="img/seven.png" alt="Seven" title="Seven" data-winnings="${sevenWinnings}"/>`,
+  `<img src="img/smiley.png" alt="Smiley" title="Smiley" data-winnings="${gameState.smileyWinnings}"/>`,
+  `<img src="img/bell.png" alt="Bell" title="Bell" data-winnings="${gameState.bellWinnings}"/>`,
+  `<img src="img/dice.png" alt="Dice" title="Dice" data-winnings="${gameState.diceWinnings}"/>`,
+  `<img src="img/cherry.png" alt="Cherry" title="Cherry" data-winnings="${gameState.cherryWinnings}"/>`,
+  `<img src="img/seven.png" alt="Seven" title="Seven" data-winnings="${gameState.sevenWinnings}"/>`,
 ];
 
 // DECLARE UI VARIABLES
@@ -32,16 +34,26 @@ const change = document.querySelector(".change");
 const payOutInfo = document.querySelectorAll(".payout-info");
 
 // BET BUTTONS UI DATA
-betButtons[0].innerText = betOne;
-betButtons[1].innerText = betTwo;
-betButtons[2].innerText = betThree;
+betButtons[0].innerText = gameState.betOne;
+betButtons[1].innerText = gameState.betTwo;
+betButtons[2].innerText = gameState.betThree;
 
 // PAYOUT SECTION UI DATA
-payOutInfo[0].querySelector("h3").innerText = `${smileyWinnings} Credits`;
-payOutInfo[1].querySelector("h3").innerText = `${bellWinnings} Credits`;
-payOutInfo[2].querySelector("h3").innerText = `${diceWinnings} Credits`;
-payOutInfo[3].querySelector("h3").innerText = `${cherryWinnings} Credits`;
-payOutInfo[4].querySelector("h3").innerText = `${sevenWinnings} Credits`;
+payOutInfo[0].querySelector(
+  "h3"
+).innerText = `${gameState.smileyWinnings} Credits`;
+payOutInfo[1].querySelector(
+  "h3"
+).innerText = `${gameState.bellWinnings} Credits`;
+payOutInfo[2].querySelector(
+  "h3"
+).innerText = `${gameState.diceWinnings} Credits`;
+payOutInfo[3].querySelector(
+  "h3"
+).innerText = `${gameState.cherryWinnings} Credits`;
+payOutInfo[4].querySelector(
+  "h3"
+).innerText = `${gameState.sevenWinnings} Credits`;
 
 // LOCAL STORAGE CHECK
 if (localStorage.length) {
@@ -64,12 +76,12 @@ makeBet.addEventListener("mouseout", function () {
 // UPDATE CREDITS FUNCTION
 const updateCredits = (bet, earnings) => {
   // CAN THE BROWSER SUPPORT MP3
-  if (winSoundMP3.canPlayType("audio/mpeg")) {
-    winSoundMP3.volume = 0.1;
-    winSoundMP3.play();
+  if (gameState.winSoundMP3.canPlayType("audio/mpeg")) {
+    gameState.winSoundMP3.volume = 0.1;
+    gameState.winSoundMP3.play();
   } else {
-    winSoundOGG.volume = 0.1;
-    winSoundOGG.play();
+    gameState.winSoundOGG.volume = 0.1;
+    gameState.winSoundOGG.play();
   }
   let totalWinnings = earnings * (bet / 100);
   let currentCredits = Number(credits.innerText);
@@ -144,27 +156,27 @@ const changeSlots = (bet) => {
   }, 1000);
 
   // THIS GOES AT THE END WHEN THE SLOTS HAVE FINISHED SPINNING
-  currentBet = null;
+  gameState.currentBet = null;
 };
 
 // FUNCTION CHECK TO SEE WHETHER A BET HAS BEEN SELECTED
 const isBetTrue = () => {
   if (
-    currentBet === betOne ||
-    currentBet === betTwo ||
-    currentBet === betThree
+    gameState.currentBet === gameState.betOne ||
+    gameState.currentBet === gameState.betTwo ||
+    gameState.currentBet === gameState.betThree
   ) {
-    rotate += 360;
+    gameState.rotate += 360;
     selectBet.forEach((bet) => {
       bet.classList.add("d-none");
-      makeBet.style.rotate = `${rotate}deg`;
+      makeBet.style.rotate = `${gameState.rotate}deg`;
       betButtons.forEach((bet) => {
         bet.classList.remove("bet-amount-checked");
       });
     });
-    change.innerText = `-${currentBet}`;
+    change.innerText = `-${gameState.currentBet}`;
     change.classList.add("credit-change");
-    changeSlots(currentBet);
+    changeSlots(gameState.currentBet);
   } else {
     selectBet.forEach((bet) => {
       bet.classList.remove("d-none");
@@ -174,7 +186,7 @@ const isBetTrue = () => {
 
 // FUNCTION TO ADD/REMOVE CLASS ON CURRENT BET AND SET A VALUE TO THE CURRENT BET VARIABLE
 const setBet = (e) => {
-  currentBet = Number(e.target.innerText);
+  gameState.currentBet = Number(e.target.innerText);
   betButtons.forEach((bet) => {
     bet.classList.remove("bet-amount-checked");
   });
@@ -189,19 +201,19 @@ document.querySelector("body").addEventListener("click", (e) => {
   if (e.target === makeBet || e.target.title === "Make bet") {
     isBetTrue();
   }
-  if (e.target.innerText === betOne.toString()) {
+  if (e.target.innerText === gameState.betOne.toString()) {
     setBet(e);
   }
-  if (e.target.innerText === betTwo.toString()) {
+  if (e.target.innerText === gameState.betTwo.toString()) {
     setBet(e);
   }
-  if (e.target.innerText === betThree.toString()) {
+  if (e.target.innerText === gameState.betThree.toString()) {
     setBet(e);
   }
   if (e.target.className === "reset-credits") {
     localStorage.clear();
     credits.innerText = 5000;
-    currentBet = null;
+    gameState.currentBet = null;
     selectBet.forEach((bet) => {
       bet.classList.add("d-none");
     });
