@@ -1,6 +1,8 @@
 # Simple-slots
 A casino slot game with a simple UI/UX made using vanilla CSS and JavaScript.
 
+## https://balvindersinghportfolio.netlify.app/sites/slot/
+
 # Features
 1. Credits is stored in local storage
 2. Credits can be reset which clears the local storage
